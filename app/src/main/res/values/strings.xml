@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">MyTodo</string>
+
+    <string name="dd_delete">Delete</string>
+    <string name="dd_mark_as_complete">Mark as complete</string>
+    <string name="dd_mark_as_uncomplete">Mark as uncomplete</string>
+    <string name="dd_edit">Edit</string>
+    <string name="due_date">Due Date</string>
+    <string name="due_time">Due Time</string>
+
+    <string name="top_bar_all_tasks">All Tasks</string>
+    <string name="top_bar_edit">Edit Todo</string>
+    <string name="top_bar_create">Create Todo</string>
+
+    <!--label-->
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="due_hour">Hour</string>
+    <string name="due_minute">Minute</string>
+    <string name="due_day">Day</string>
+    <string name="due_month">Month</string>
+    <string name="due_year">Year</string>
+    <string name="time_mode_am">AM</string>
+    <string name="time_mode_pm">PM</string>
+
+    <!--button-->
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+
+    <!--field errors-->
+    <string name="err_empty_title">Invalid title</string>
+    <string name="err_incorrect_due_time">Due time has to be ahead of today\'s date time</string>
+    <string name="err_incorrect_due_time_format">Due time format not correct </string>
+    <string name="err_empty_day">Invalid due date</string>
+    <string name="err_empty_time">Invalid due time</string>
+    <string name="dd_type">Type</string>
+    <string name="dd_due_date">Due Date</string>
+
+
+</resources>
