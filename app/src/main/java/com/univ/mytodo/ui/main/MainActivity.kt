@@ -31,6 +31,7 @@ import com.univ.mytodo.data.model.Todo
 import com.univ.mytodo.ui.components.MainScaffold
 import com.univ.mytodo.ui.createoredit.CreateTodoActivity
 import com.univ.mytodo.ui.theme.MyTodoTheme
+import com.univ.mytodo.util.Constants
 import com.univ.mytodo.util.Constants.INTENT_KEY_TODO
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -56,15 +57,14 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-/*
-* checking github*/
+
 @Composable
 fun MainScreen(viewModel: MainViewModel) {
 
     val context = LocalContext.current
 
     val isSortExpanded = viewModel.isSortExpanded.observeAsState(false)
-    val allTodoList = viewModel.allTodoList.observeAsState().value
+    val allTodoList = viewModel.allTodoList.observeAsState()
 
     MainScaffold(
         topBar = {
@@ -77,7 +77,8 @@ fun MainScreen(viewModel: MainViewModel) {
                     Text(stringResource(id = R.string.top_bar_all_tasks))
 
                     Box {
-                        IconButton(onClick = { viewModel.onSortExpandedChange(true) }) {
+                        IconButton(onClick = {
+                            viewModel.sort(true) }) {
                             Icon(
                                 Icons.Filled.Sort,
                                 contentDescription = "Sort"
@@ -86,18 +87,28 @@ fun MainScreen(viewModel: MainViewModel) {
 
                         DropdownMenu(
                             expanded = isSortExpanded.value,
-                            onDismissRequest = { viewModel.onSortExpandedChange(false) }) {
+                            onDismissRequest = { viewModel.sort(false) }) {
 
                             DropdownMenuItem(onClick = {
-                                viewModel.onSortExpandedChange(false)
+                                viewModel.sort(false)
+                                viewModel.onFilterClick( Constants.TodoType.ALL)
                             }) {
-                                Text(text = stringResource(id = R.string.dd_type))
+                                Text(text = stringResource(id = R.string.dd_all))
                             }
 
                             DropdownMenuItem(onClick = {
-                                viewModel.onSortExpandedChange(false)
+                                viewModel.sort(false)
+
+                                viewModel.onFilterClick( Constants.TodoType.COMPLETED)
                             }) {
-                                Text(text = stringResource(id = R.string.dd_due_date))
+                                Text(text = stringResource(id = R.string.dd_completed))
+                            }
+
+                            DropdownMenuItem(onClick = {
+                                viewModel.sort(false)
+                                viewModel.onFilterClick(Constants.TodoType.INCOMPLETE)
+                            }) {
+                                Text(text = stringResource(id = R.string.dd_in_complete))
                             }
                         }
                     }
@@ -121,7 +132,7 @@ fun MainScreen(viewModel: MainViewModel) {
         },
         content = {
             Box(modifier = Modifier.fillMaxSize()) {
-                allTodoList?.run {
+                allTodoList.value?.run {
                     if (!isNullOrEmpty()) {
                         LazyColumn() {
                             items(items = this@run, key = { item ->

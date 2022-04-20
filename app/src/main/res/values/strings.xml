@@ -34,7 +34,9 @@
     <string name="err_empty_day">Invalid due date</string>
     <string name="err_empty_time">Invalid due time</string>
     <string name="dd_type">Type</string>
-    <string name="dd_due_date">Due Date</string>
+    <string name="dd_all">All</string>
+    <string name="dd_completed">Completed</string>
+    <string name="dd_in_complete">Incomplete</string>
 
 
 </resources>

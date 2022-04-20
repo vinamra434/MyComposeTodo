@@ -11,4 +11,10 @@ object Constants {
         AM(true),
         PM(false)
     }
+
+    enum class TodoType {
+        ALL,
+        COMPLETED,
+        INCOMPLETE
+    }
 }
