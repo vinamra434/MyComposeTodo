@@ -32,8 +32,8 @@ class MainViewModel @Inject constructor(
 
     val isSortExpanded: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
 
-
     fun deleteTodo(todo: Todo) {
+        Log.d("TAG","deleteTodo")
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 todoRepository.deleteTodo(todo.id)
@@ -47,6 +47,7 @@ class MainViewModel @Inject constructor(
     }
 
     fun changeMarkAsStatus(todo: Todo) {
+        Log.d("TAG","changeMarkAsStatus")
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 todoRepository.upsertTodo(todo)
@@ -59,12 +60,14 @@ class MainViewModel @Inject constructor(
         }
     }
 
-    fun sort(isVisible: Boolean) {
+    fun onFilterExpanded(isVisible: Boolean) {
+        Log.d("TAG","onFilterExpanded")
         isSortExpanded.postValue(isVisible)
     }
 
 
     fun onFilterClick(type: Constants.TodoType) {
+        Log.d("TAG","onFilterClick")
         todoType.postValue(type)
     }
 }

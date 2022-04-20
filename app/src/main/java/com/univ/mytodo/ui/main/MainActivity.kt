@@ -78,7 +78,7 @@ fun MainScreen(viewModel: MainViewModel) {
 
                     Box {
                         IconButton(onClick = {
-                            viewModel.sort(true) }) {
+                            viewModel.onFilterExpanded(true) }) {
                             Icon(
                                 Icons.Filled.Sort,
                                 contentDescription = "Sort"
@@ -87,17 +87,17 @@ fun MainScreen(viewModel: MainViewModel) {
 
                         DropdownMenu(
                             expanded = isSortExpanded.value,
-                            onDismissRequest = { viewModel.sort(false) }) {
+                            onDismissRequest = { viewModel.onFilterExpanded(false) }) {
 
                             DropdownMenuItem(onClick = {
-                                viewModel.sort(false)
+                                viewModel.onFilterExpanded(false)
                                 viewModel.onFilterClick( Constants.TodoType.ALL)
                             }) {
                                 Text(text = stringResource(id = R.string.dd_all))
                             }
 
                             DropdownMenuItem(onClick = {
-                                viewModel.sort(false)
+                                viewModel.onFilterExpanded(false)
 
                                 viewModel.onFilterClick( Constants.TodoType.COMPLETED)
                             }) {
@@ -105,7 +105,7 @@ fun MainScreen(viewModel: MainViewModel) {
                             }
 
                             DropdownMenuItem(onClick = {
-                                viewModel.sort(false)
+                                viewModel.onFilterExpanded(false)
                                 viewModel.onFilterClick(Constants.TodoType.INCOMPLETE)
                             }) {
                                 Text(text = stringResource(id = R.string.dd_in_complete))
