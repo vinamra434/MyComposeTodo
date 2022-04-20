@@ -5,9 +5,12 @@ import androidx.lifecycle.*
 import com.univ.mytodo.data.model.Todo
 import com.univ.mytodo.data.repository.TodoRepository
 import com.univ.mytodo.util.*
+import com.univ.mytodo.util.FormatterUtil.convert24To12
+import com.univ.mytodo.util.FormatterUtil.getFormattedValue
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.text.DecimalFormat
 import javax.inject.Inject
 
 @HiltViewModel
@@ -117,10 +120,12 @@ class CreateTodoViewModel @Inject constructor(private val todoRepository: TodoRe
         //converting 12hr format to 24hr format for storing in db
         dueModeField.value.run {
 
-            if (this == Constants.TimeMode.PM) {
-                dueHour = dueHour?.plus(12)
-            } else {
-                if (dueHour == 12) {
+            if (dueHour != null) {
+                if (this == Constants.TimeMode.PM && dueHour!! < 12) {
+                    dueHour = dueHour!!.plus(12)
+                }
+
+                if (this == Constants.TimeMode.AM && dueHour == 12) {
                     dueHour = 0
                 }
             }
@@ -148,9 +153,13 @@ class CreateTodoViewModel @Inject constructor(private val todoRepository: TodoRe
                             id = if (id == -1/*this means we are creating new_todo*/) 0 else id /*this means we are editing old_todo*/, //if id is available then save edited _todo
                             title = title,
                             desc = desc,
-                            date = "$dueMonth/$dueDay/$dueYear",
+                            date = getFormattedDate(
+                                dueMonth,
+                                dueDay,
+                                dueYear.toString()
+                            ),
                             isCompleted = false,
-                            time = "$dueHour:$dueMinute"
+                            time = "${getFormattedValue(dueHour!!)}:${getFormattedValue(dueMinute)}"
                         )
                         todoRepository.upsertTodo(todo)
                         Log.d("CreateTodoViewModel", "todo inserted is $todo")
@@ -159,13 +168,31 @@ class CreateTodoViewModel @Inject constructor(private val todoRepository: TodoRe
                     } catch (e: Exception) {
                         Log.d(
                             "CreateTodoViewModel",
-                            "exception caught for insert todo operation $e"
+                            "onSave: exception caught for insert todo operation $e"
                         )
                     }
                 }
             }
         }
     }
+
+
+    private fun getFormattedDate(dueDay: Int, dueMonth: Int, dueYear: String): String {
+        val decimalFormat = DecimalFormat("00")
+
+        var formattedDay = dueDay.toString()
+        if (formattedDay.length == 1) {
+            formattedDay = decimalFormat.format(dueDay)
+        }
+
+        var formattedMonth = dueMonth.toString()
+        if (formattedMonth.length == 1) {
+            formattedMonth = decimalFormat.format(dueMonth)
+        }
+
+        return "$formattedMonth/$formattedDay/$dueYear"
+    }
+
 
     fun loadTodoData(id: Int) {
         Log.i("CreateTodoViewModel", "loadTodoData")
@@ -186,10 +213,14 @@ class CreateTodoViewModel @Inject constructor(private val todoRepository: TodoRe
                 dueYearField.postValue(splitDueYear)
 
                 val splitTime: List<String> = todo.time.split(":")
-                val splitMinute = splitTime[1]
-                val splitHour = splitTime[0]
-                dueHourField.postValue(splitHour)
-                dueMinuteField.postValue(splitMinute)
+                val splitHour = splitTime[0].toInt()
+                val splitMinute = splitTime[1].toInt()
+
+                val mode = FormatterUtil.getTimeMode(splitHour)
+                dueModeField.postValue(mode)
+
+                dueHourField.postValue(convert24To12(splitHour)) //convert 24hr to 12hr format
+                dueMinuteField.postValue(splitMinute.toString())
 
             } catch (e: Exception) {
                 Log.i("CreateTodoViewModel", "exception caught in loadTodoData e = $e")

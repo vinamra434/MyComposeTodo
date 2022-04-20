@@ -75,7 +75,7 @@ object Validator {
                     add(
                         Validation(
                             Validation.Field.DUE_TIME,
-                            Resource.error(R.string.err_incorrect_due_time)
+                            Resource.error(R.string.err_empty_time)
                         )
                     )
 

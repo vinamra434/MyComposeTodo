@@ -26,6 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.min
 import com.univ.mytodo.R
 import com.univ.mytodo.data.model.Todo
 import com.univ.mytodo.ui.components.MainScaffold
@@ -33,6 +34,8 @@ import com.univ.mytodo.ui.createoredit.CreateTodoActivity
 import com.univ.mytodo.ui.theme.MyTodoTheme
 import com.univ.mytodo.util.Constants
 import com.univ.mytodo.util.Constants.INTENT_KEY_TODO
+import com.univ.mytodo.util.FormatterUtil
+import com.univ.mytodo.util.FormatterUtil.getTimeMode
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -224,6 +227,13 @@ fun TodoItem(
                     overflow = TextOverflow.Ellipsis,
                     textDecoration = if (todo.isCompleted) TextDecoration.LineThrough else null
                 )
+                Text(
+                    text = getTime(todo),
+                    maxLines = 1,
+                    style = MaterialTheme.typography.body1,
+                    overflow = TextOverflow.Ellipsis,
+                    textDecoration = if (todo.isCompleted) TextDecoration.LineThrough else null
+                )
             }
 
             Box(Modifier.align(Alignment.Top)) {
@@ -273,4 +283,15 @@ fun TodoItem(
             }
         }
     }
+}
+
+@Composable
+private fun getTime(todo: Todo): String {
+    val split = todo.time.split(":")
+    val hour = split[0].toInt()
+    val minute = split[1].toInt()
+    val mode = getTimeMode(hour)
+
+    //convert 24hr to 12 hr format
+    return "${FormatterUtil.convert24To12(hour)}:${FormatterUtil.getFormattedValue(minute)} $mode"
 }

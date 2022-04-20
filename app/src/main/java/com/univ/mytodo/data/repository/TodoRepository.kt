@@ -9,8 +9,6 @@ import javax.inject.Singleton
 @Singleton
 class TodoRepository @Inject constructor(private val todoDao: TodoDao) {
 
-    val getAllTodoLive = todoDao.getAllTodoLive()
-
     fun getTodos(isCompleted: Boolean?) = todoDao.getTodos(isCompleted)
 
     suspend fun upsertTodo(todo: Todo): Long =

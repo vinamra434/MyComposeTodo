@@ -30,7 +30,7 @@
     <!--field errors-->
     <string name="err_empty_title">Invalid title</string>
     <string name="err_incorrect_due_time">Due time has to be ahead of today\'s date time</string>
-    <string name="err_incorrect_due_time_format">Due time format not correct </string>
+    <string name="err_incorrect_due_time_format">Time format must follow 12hr clock</string>
     <string name="err_empty_day">Invalid due date</string>
     <string name="err_empty_time">Invalid due time</string>
     <string name="dd_type">Type</string>
