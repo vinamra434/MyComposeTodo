@@ -26,7 +26,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.min
 import com.univ.mytodo.R
 import com.univ.mytodo.data.model.Todo
 import com.univ.mytodo.ui.components.MainScaffold
@@ -111,7 +110,7 @@ fun MainScreen(viewModel: MainViewModel) {
                                 viewModel.onFilterExpanded(false)
                                 viewModel.onFilterClick(Constants.TodoType.INCOMPLETE)
                             }) {
-                                Text(text = stringResource(id = R.string.dd_in_complete))
+                                Text(text = stringResource(id = R.string.dd_un_complete))
                             }
                         }
                     }
@@ -192,7 +191,6 @@ fun TodoItem(
 
         Row(
             Modifier
-                .fillMaxWidth()
                 .background(
                     color = if (todo.isCompleted) androidx.compose.ui.graphics.Color.Black.copy(
                         alpha = 0.7f
@@ -205,6 +203,7 @@ fun TodoItem(
             Column(
                 Modifier
                     .padding(16.dp)
+                    .weight(1f)
             ) {
                 Text(
                     text = todo.title,

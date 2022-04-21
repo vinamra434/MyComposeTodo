@@ -154,8 +154,8 @@ class CreateTodoViewModel @Inject constructor(private val todoRepository: TodoRe
                             title = title,
                             desc = desc,
                             date = getFormattedDate(
-                                dueMonth,
                                 dueDay,
+                                dueMonth,
                                 dueYear.toString()
                             ),
                             isCompleted = false,
@@ -220,7 +220,7 @@ class CreateTodoViewModel @Inject constructor(private val todoRepository: TodoRe
                 dueModeField.postValue(mode)
 
                 dueHourField.postValue(convert24To12(splitHour)) //convert 24hr to 12hr format
-                dueMinuteField.postValue(splitMinute.toString())
+                dueMinuteField.postValue(getFormattedValue(splitMinute))
 
             } catch (e: Exception) {
                 Log.i("CreateTodoViewModel", "exception caught in loadTodoData e = $e")

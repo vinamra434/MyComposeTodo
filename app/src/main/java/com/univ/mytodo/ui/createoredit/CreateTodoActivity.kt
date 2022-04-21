@@ -179,25 +179,6 @@ fun CreateTodoScreen(todoId: Int, viewModel: CreateTodoViewModel) {
                     )
 
                     Row() {
-                        OutlinedTextField(
-                            modifier = Modifier.weight(1f),
-                            value = dueDay,
-                            onValueChange = {
-                                if (it.length < MAX_LENGTH_2) {
-                                    viewModel.onDueDayChange(it)
-                                }
-                            },
-                            singleLine = true,
-                            isError = isDateError,
-                            label = { Text(stringResource(id = R.string.due_day)) },
-
-                            keyboardOptions = KeyboardOptions.Default.copy(
-                                imeAction = ImeAction.Next,
-                                keyboardType = KeyboardType.NumberPassword
-                            ),
-                        )
-
-                        Spacer(modifier = Modifier.width(8.dp))
 
                         OutlinedTextField(
                             modifier = Modifier.weight(1f),
@@ -210,6 +191,26 @@ fun CreateTodoScreen(todoId: Int, viewModel: CreateTodoViewModel) {
                             },
                             isError = isDateError,
                             label = { Text(stringResource(id = R.string.due_month)) },
+
+                            keyboardOptions = KeyboardOptions.Default.copy(
+                                imeAction = ImeAction.Next,
+                                keyboardType = KeyboardType.NumberPassword
+                            ),
+                        )
+
+                        Spacer(modifier = Modifier.width(8.dp))
+
+                        OutlinedTextField(
+                            modifier = Modifier.weight(1f),
+                            value = dueDay,
+                            onValueChange = {
+                                if (it.length < MAX_LENGTH_2) {
+                                    viewModel.onDueDayChange(it)
+                                }
+                            },
+                            singleLine = true,
+                            isError = isDateError,
+                            label = { Text(stringResource(id = R.string.due_day)) },
 
                             keyboardOptions = KeyboardOptions.Default.copy(
                                 imeAction = ImeAction.Next,

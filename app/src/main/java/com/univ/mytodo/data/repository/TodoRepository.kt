@@ -16,9 +16,7 @@ class TodoRepository @Inject constructor(private val todoDao: TodoDao) {
 
 
     suspend fun deleteTodo(id: Int) {
-        Dispatchers.IO.apply {
-            todoDao.delete(id)
-        }
+        todoDao.delete(id)
     }
 
     suspend fun getTodo(id: Int): Todo =

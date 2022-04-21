@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MyTodo</string>
+    <string name="app_name">Compose Todo</string>
 
     <string name="dd_delete">Delete</string>
     <string name="dd_mark_as_complete">Mark as complete</string>
@@ -36,7 +36,7 @@
     <string name="dd_type">Type</string>
     <string name="dd_all">All</string>
     <string name="dd_completed">Completed</string>
-    <string name="dd_in_complete">Incomplete</string>
+    <string name="dd_un_complete">Uncomplete</string>
 
 
 </resources>
